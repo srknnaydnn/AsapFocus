@@ -1,0 +1,44 @@
+﻿@model IEnumerable<HS_CostOfFuture>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@foreach (var item in Model)
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Aylık Gün Sayısı</th>
+                <th scope="col">Günlük Hesaplama</th>
+                <th scope="col">Aylık Hesaplama</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (DateTime i = item.BegDate; i <= item.EndTime;i = i.Date.AddMonths(1))
+            {
+
+                int dateParse =DateTime.DaysInMonth(i.Year,i.Month);
+                var dayAmount = (@item.PolcyAmount / 365 * dateParse);
+                var monthAmount = @item.PolcyAmount / @item.InstallmentNo;
+                <tr>
+                    <td>@i.Date.ToString("dd/MM/yyyy")</td>
+                    <td>@dateParse</td>
+                    <td>@dayAmount</td>
+                    <td>@monthAmount</td>
+
+
+                </tr>
+
+            }
+            </tbody>
+
+        </table>
+
+}
+            
